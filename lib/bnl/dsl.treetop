@@ -1,5 +1,5 @@
 module Bnl
-	grammar Parser
+	grammar Dsl
 
 		rule sentence
       fragment conjoined_fragments:(conjunction fragment)* period {

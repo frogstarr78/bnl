@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 module Bnl
   describe "Parser" do
     before :each do 
-      @parser = Pratt::DslParser.new
+      @parser = Bnl::DslParser.new
     end
 
     describe 'handles verbs as expected' do

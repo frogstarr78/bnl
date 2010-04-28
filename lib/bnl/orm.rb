@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'dm-core'
-require 'pratt_dsl'
+require 'bnl'
 require 'chronic'
 
-DataMapper.setup :default, "sqlite3:pratt_dsl_example.sqlite3"
+DataMapper.setup :default, "sqlite3:db/pratt_dsl_example.sqlite3"
 
 class Project
   include DataMapper::Resource
@@ -51,7 +51,7 @@ proj = Project.new
 proj.attributes = { :name => 'Research' }
 proj.save
 
-module Pratt::Dsl
+module Bnl::DslParser
   module OrmMethods
     def to_sym
       to_s.to_sym

@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'rake'
+require 'tasks/bnl'
 
 begin
   require 'jeweler'
@@ -31,6 +32,7 @@ Spec::Rake::SpecTask.new(:rcov) do |spec|
 end
 
 task :spec => :check_dependencies
+task :spec => :"bnl:generate_parser_lib"
 
 begin
   require 'reek/adapters/rake_task'

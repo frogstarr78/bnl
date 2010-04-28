@@ -1,5 +1,5 @@
-module Pratt
-	grammar Dsl
+module Bnl
+	grammar Parser
 
 		rule sentence
       fragment conjoined_fragments:(conjunction fragment)* period {

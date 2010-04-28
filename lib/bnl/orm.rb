@@ -73,8 +73,12 @@ module Bnl::Dsl
   end
 
   module TemporalValue #< Treetop::Runtime::SyntaxNode
+    def to_s
+      literal.text_value
+    end
+
     def value
-      Chronic.parse literal.text_value
+      Chronic.parse to_s
     end
   end
 end

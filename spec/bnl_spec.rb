@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 module Bnl
-  describe "Parser" do
+  describe "DslParser" do
     before :each do 
       @parser = Bnl::DslParser.new
     end
@@ -52,6 +52,7 @@ module Bnl
       it "exposes expected attribute/method(s) on a simple sentence" do
         fragment = @parser.parse('Cease Lunch/Break at 13:00.').fragments.first
 
+        fragment.should respond_to(:execute)
         fragment.to_s.should eql('Cease Lunch/Break at 13:00')
         fragment.verb.to_s.should eql('cease')
         fragment.noun.to_s.should eql('Lunch/Break')

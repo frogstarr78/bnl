@@ -51,7 +51,7 @@ proj = Project.new
 proj.attributes = { :name => 'Research' }
 proj.save
 
-module Bnl::DslParser
+module Bnl::Dsl
   module OrmMethods
     def to_sym
       to_s.to_sym

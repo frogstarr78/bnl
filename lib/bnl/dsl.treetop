@@ -36,7 +36,7 @@ module Bnl
 		end
 
     rule literal
-      ( ( !meaningless_conjunction !conjunction !period . )+ / ( !meaningless_conjunction !period . )+ )
+      ( !meaningless_conjunction !conjunction !period . )+
     end
 
     rule morning_r_evening

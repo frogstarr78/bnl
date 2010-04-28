@@ -2,15 +2,15 @@
 
 Although I liked the idea presented by Jay Fields on infoq, I didn't care for his use of regular expressions.
 However, I couldn't think of anything better. Then I discovered the Treetop gem from Jan Kassens.
-This is an attempt to objectify some natural language. I don't plan on making it a full language parser in any respect. 
-But it occurs to me that a small set of natural language (as Jay Fields points out) can be used to implement programming.
+This is an attempt to objectify some natural language. I don't plan on making it a full language parser. 
+But, as Jay Fields points out, a small set of natural language can be used to implement programming.
 
-*Currently it's only a proof of concept.*
+<b>Currently it's only a proof of concept.</b>
 
 == Credits 
 
-Treetop[http://treetop.rubyforge.org/index.html]
-Business-Natural-Languages[http://www.infoq.com/presentations/fields-business-natural-languages-ruby]
+- Treetop[http://treetop.rubyforge.org/index.html]
+- Business-Natural-Languages[http://www.infoq.com/presentations/fields-business-natural-languages-ruby]
 
 == Note on Patches/Pull Requests
  

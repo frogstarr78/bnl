@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'rake'
-require 'tasks/bnl'
+#require 'tasks/bnl'
 
 begin
   require 'jeweler'
@@ -32,7 +32,9 @@ Spec::Rake::SpecTask.new(:rcov) do |spec|
 end
 
 task :spec => :check_dependencies
-task :spec => File.join(Dir.pwd, %w(lib bnl parser.rb))
+
+import 'tasks/bnl.rake'
+task :spec => File.join(Dir.pwd, %w(lib bnl dsl.rb))
 
 begin
   require 'reek/adapters/rake_task'

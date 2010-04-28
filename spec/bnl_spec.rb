@@ -59,24 +59,27 @@ module Bnl
       end
 
       it "exposes expected attribute/method(s) on a complex sentence" do
-        fragments = fragments('End Lunch/Break at 1:00 am, Start Something at 1:00 pm, and end something at 1:00 pm.')
+        fragments = fragments('End Lunch/Break at 1:00 am, Start Something at 1:01 pm, and end something at 1:02 pm.')
 
         fragments.size.should eql(3)
 
         fragments[0].to_s.should eql('End Lunch/Break at 1:00 am')
         fragments[0].verb.to_s.should eql('end')
         fragments[0].noun.to_s.should eql('Lunch/Break')
+        fragments[0].temporal.to_s.should eql('1:00 am')
         fragments[0].temporal.value.should eql(Chronic.parse('1:00 am'))
 
-        fragments[1].to_s.should eql('Start Something at 1:00 pm')
+        fragments[1].to_s.should eql('Start Something at 1:01 pm')
         fragments[1].verb.to_s.should eql('start')
         fragments[1].noun.to_s.should eql('Something')
-        fragments[1].temporal.value.should eql(Chronic.parse('1:00 pm'))
+        fragments[1].temporal.to_s.should eql('1:01 pm')
+        fragments[1].temporal.value.should eql(Chronic.parse('1:01 pm'))
 
-        fragments[2].to_s.should eql('end something at 1:00 pm')
+        fragments[2].to_s.should eql('end something at 1:02 pm')
         fragments[2].verb.to_s.should eql('end')
         fragments[2].noun.to_s.should eql('something')
-        fragments[2].temporal.value.should eql(Chronic.parse('1:00 pm'))
+        fragments[2].temporal.to_s.should eql('1:02 pm')
+        fragments[2].temporal.value.should eql(Chronic.parse('1:02 pm'))
       end
     end
   end

@@ -1,4 +1,8 @@
 namespace :bnl do
+  file File.join(Dir.pwd, %w(lib bnl dsl.treetop)) do
+    Rake::Task["bnl:generate_parser_lib"].execute
+  end
+
   file File.join(Dir.pwd, %w(lib bnl dsl.rb)) do
     Rake::Task["bnl:generate_parser_lib"].execute
   end

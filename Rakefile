@@ -34,7 +34,8 @@ end
 task :spec => :check_dependencies
 
 import 'tasks/bnl.rake'
-task :spec => File.join(Dir.pwd, %w(lib bnl dsl.rb))
+task :spec => [File.join(Dir.pwd, %w(lib bnl dsl.treetop)), File.join(Dir.pwd, %w(lib bnl dsl.rb))]
+task :build => File.join(Dir.pwd, %w(lib bnl dsl.rb))
 
 begin
   require 'reek/adapters/rake_task'

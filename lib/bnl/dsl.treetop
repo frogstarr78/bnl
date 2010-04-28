@@ -10,11 +10,7 @@ module Bnl
     end
 
 		rule fragment
-      verb space noun space temporal {
-        def to_s
-          text_value
-        end
-      }
+      verb space noun space temporal <ActionItem>
 		end
 
 		rule verb

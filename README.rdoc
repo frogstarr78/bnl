@@ -7,6 +7,11 @@ But, as Jay Fields points out, a small set of natural language can be used to im
 
 <b>Currently it's only a proof of concept.</b>
 
+== Plans
+
+I can see this as being a general use case for coupling natural language to all sorts of things. E.g. commands, api's other than
+ORM's, etc. However, I'm currently working on getting the base capabilities worked out.
+
 == Credits 
 
 - Treetop[http://treetop.rubyforge.org/index.html]

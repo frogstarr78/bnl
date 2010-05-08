@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'chronic'
 require 'dm-core'
 require 'dm-aggregates'
 
@@ -21,8 +23,21 @@ class Project
   end
 
   def has_start?
-    true
+    true end
+
+  def self.last_unended
+    unended_whences = Whence.last_unended
+    return nil if unended_whences.empty?
+    unended_whences.last.project
   end
+
+  def self.last_unended
+    Whence.last_unended do |w|
+      return nil if w.empty? 
+      w.project
+    end
+  end
+
 end
 
 class Whence
@@ -35,18 +50,20 @@ class Whence
 
   belongs_to :project
 
+  def self.unended
+    all :end_at => nil
+  end
+
   def self.last_unended
-    last :end_at.eql => nil
+    last :end_at => nil
   end
 end
 
 DataMapper.auto_migrate!
 
-proj = Project.new
-proj.attributes = { :name => 'Lunch/Break' }
-proj.save
+Project.create :name => 'Lunch/Break'
+Project.create :name => 'Research'
 
-proj = Project.new
-proj.attributes = { :name => 'Research' }
-proj.save
-
+Whence.create :project => Project.named("Research"), :start_at => Chronic.parse("yesterday 1:00 pm")
+Whence.create :project => Project.named("Lunch/Break"), :start_at => Chronic.parse("12:00 am"), :end_at => Chronic.parse("1:00 pm")
+Whence.create :project => Project.named("Research"), :start_at => Chronic.parse("1:00 pm")

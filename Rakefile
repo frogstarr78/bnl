@@ -34,7 +34,7 @@ end
 task :spec => :check_dependencies
 
 import 'tasks/bnl.rake'
-task :spec => [File.join(Dir.pwd, %w(lib bnl dsl.treetop)), File.join(Dir.pwd, %w(lib bnl dsl.rb))]
+task :spec => [ "bnl:rm_lib", "bnl:generate_parser_lib" ]
 task :build => File.join(Dir.pwd, %w(lib bnl dsl.rb))
 
 begin

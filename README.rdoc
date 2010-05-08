@@ -9,6 +9,23 @@ But, as Jay Fields points out, a small set of natural language can be used to im
 
 == Plans
 
+Classes are dependant on context. Context is provided by the app that includes them.
+
+Article => Class e.g.
+The Project => class Project
+  include DataMapper::Resource 
+  #... 
+end
+
+Adjective => Attribute e.g.
+Named Something => {object}.named == 'Something'
+
+Verb => Method  e.g.
+begin {project} at {time} => {object}.begin( time )
+
+Noun => Object/Instance e.g.
+Something => Project.first( :name => "Something" )
+
 I can see this as being a general use case for coupling natural language to all sorts of things. E.g. commands, api's other than
 ORM's, etc. However, I'm currently working on getting the base capabilities worked out.
 

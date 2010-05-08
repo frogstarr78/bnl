@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
+require 'fixtures'
 
 module Bnl
   describe "DslParser" do
@@ -7,7 +8,7 @@ module Bnl
     end
 
     describe 'handles verbs as expected' do
-      good_verbs = %w(begin start restart cease end)
+      good_verbs = %w(begin start restart cease end create)
       good_verbs | good_verbs.collect(&:capitalize)
       bad_verbs = %w(eat Eat)
 
@@ -30,10 +31,13 @@ module Bnl
     end
 
     describe 'parsing' do
+
       def fragments of
+        fragments = @parser.parse(of).fragments
         return yield @parser.parse(of).fragments if block_given?
-        return @parser.parse(of).fragments
+        fragments
       end
+
       def strings 
         proc {|frags| frags.collect(&:to_s)}
       end
@@ -42,6 +46,20 @@ module Bnl
         fragments('Begin Lunch/Break at 12:00.', &strings).should eql(['Begin Lunch/Break at 12:00'])
         fragments('Start Lunch/Break at 12:00 pm and end Lunch/Break at 1:00 am.', &strings).should eql(['Start Lunch/Break at 12:00 pm', 'end Lunch/Break at 1:00 am'])
         fragments('End Lunch/Break at 1:00 am, Start Something at 1:00 pm, and end something at 1:00 pm.', &strings).should eql(['End Lunch/Break at 1:00 am', 'Start Something at 1:00 pm', 'end something at 1:00 pm'])
+      end
+
+      it ", parses definite articles" do
+        fragments('Begin the project Lunch/Break at 12:00.', &strings).should eql(['Begin the project Lunch/Break at 12:00'])
+      end
+
+      it ", parses indefinite articles" do
+        fragments = fragments('Create a project Something on 5/5.')
+        fragments.collect(&:to_s).should eql(['Create a project Something on 5/5'])
+        fragments.first.article.to_s.should eql('a project')
+      end
+
+      it ", parses indefinite articles with a 'new' adjective" do
+        fragments('Create a new project Something on 5/5.', &strings).should eql(['Create a new project Something on 5/5'])
       end
 
       it "shouldn't parse the 'or' conjunction" do
@@ -55,7 +73,9 @@ module Bnl
         fragment.should respond_to(:execute)
         fragment.to_s.should eql('Cease Lunch/Break at 13:00')
         fragment.verb.to_s.should eql('cease')
+        fragment.article.to_s.should eql('')
         fragment.noun.to_s.should eql('Lunch/Break')
+        fragment.noun.orm_constants.should eql(['Project', 'Whence'])
         fragment.temporal.value.should eql(Chronic.parse('13:00'))
       end
 

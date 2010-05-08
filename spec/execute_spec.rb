@@ -1,13 +1,13 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 require 'fixtures'
 
 module Bnl
-  describe "executed parsed fragment" do
+  describe "executing a parsed fragment" do
     before :each do 
       @parser = Bnl::DslParser.new
     end
 
-    it "should emulate this behavior" do
+    it "emulates this behavior" do
       project = Project.named 'Lunch/Break'
       whence = Chronic.parse('13:00')
 
@@ -16,14 +16,14 @@ module Bnl
       project.start whence
     end
 
-    it "should find the model instance we're expecting" do
+    it "finds the model instance we're expecting" do
       parsed = @parser.parse('Start Lunch/Break at 13:00.')
       fragment = parsed.fragments.first
 
       fragment.noun.find.should eql(Project.first)
     end
 
-    it "should operate on the domain models as expected" do
+    it "operates on the domain models as expected" do
       parsed = @parser.parse('Start Lunch/Break at 13:00.')
       fragment = parsed.fragments.first
 

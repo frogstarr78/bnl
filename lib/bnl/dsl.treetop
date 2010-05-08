@@ -10,7 +10,7 @@ module Bnl
     end
 
 		rule fragment
-      verb space noun space temporal <ActionItem>
+      verb space article? noun space temporal <ActionItem>
 		end
 
 		rule verb
@@ -19,13 +19,35 @@ module Bnl
 			'start' / 'Start' /
 			'restart' / 'Restart' /
 			'cease' / 'Cease' /
-			'end' / 'End'
+			'end' / 'End' / 
+      'create' / 'Create'
       ) <OrmMethods>
 		end
 
 		rule noun
-			( !space . )+ <OrmModel>
+			 ( !space . )+ <OrmModel>
 		end
+
+    rule article
+      ( definite_articles / indefinite_articles  ) space ( !space . )+ space <Klass>
+    end
+
+    rule definite_articles
+      'the'
+    end
+
+    rule indefinite_articles
+      ( 'a' ( space consonant_adjectives )? ) 
+      #/ 'an' ()? )
+    end
+
+    rule consonant_adjectives
+      'new'
+    end
+
+    rule vowel_adjectives
+      !space
+    end
 
 		rule temporal
       preposition space literal <TemporalValue>
@@ -33,10 +55,6 @@ module Bnl
 
     rule literal
       ( !meaningless_conjunction !conjunction !period . )+
-    end
-
-    rule morning_r_evening
-      ( [aA] / [pP] ) [mM]
     end
 
 		rule preposition

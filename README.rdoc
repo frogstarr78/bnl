@@ -7,6 +7,71 @@ But, as Jay Fields points out, a small set of natural language can be used to im
 
 <b>Currently it's only a proof of concept.</b>
 
+== Examples
+
+DSL:
+  Begin Lunch/Break at 12:00.
+
+One action is composed this way<super>i</super>:
+  Object: Lunch/Break, # The dsl knows how to use this as an identifier to find the appropriate domain object
+  Method: Begin,
+  Arguments: at 12:00.
+
+DSL:
+  End Lunch/Break at 1:00 am, Start Something at 1:00 pm, and end something at 1:00 pm.
+
+List of actions:<super>i</super>
+  [
+    {
+      Object: Lunch/Break,
+      Method: End,
+      Arguments: at 1:00 am,
+    },
+
+    {
+      Object: Something,
+      Method: end,
+      Arguments: at 1:00 pm,
+    },
+
+    {
+      Object: something,
+      Method: end,
+      Arguments: at 1:00 pm,
+    },
+
+  ]
+
+DSL:
+  Create a project Something on 5/5.
+
+Composition:
+  Class: Project
+  Identifier(name): Something
+  Method: Create
+  Arguments: on 5/5
+
+There can also be a difference, depending on the methods involved, between the (linguistic) article being used:
+
+  Create a project Name .... # Project.new :name => Task, ...args
+
+vs.
+
+  Begin Name on ...
+  # project = Project.find_by_name Name
+  # project.begin args
+
+or.
+
+  Finish the Name ...
+
+  # project = Project.find_by_name Name
+  # project.begin args
+
+There are obvious assumtions here. These examples wouldn't directly translate if the sentence read, "Finish project 1", however, there is already a difference in how you have to refer to these entities. I suspect that this can be handled.
+
+<super>i</super> Format is strictly used for clarity.
+
 == Plans
 
 Classes are dependant on context. Context is provided by the app that includes them.

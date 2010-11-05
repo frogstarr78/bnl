@@ -37,8 +37,7 @@ module Bnl
     end
 
     rule indefinite_articles
-      ( 'a' ( space consonant_adjectives )? ) 
-      #/ 'an' ()? )
+      ( 'an' / 'a' ) ( space consonant_adjectives )? 
     end
 
     rule consonant_adjectives

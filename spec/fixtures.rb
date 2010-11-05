@@ -10,6 +10,7 @@ class Project
 
   property :id, Serial
   property :name, String, :required => true
+  property :created_at, DateTime, :default => DateTime.now
 
   has n, :whences
 
@@ -23,7 +24,8 @@ class Project
   end
 
   def has_start?
-    true end
+    true
+  end
 
   def self.last_unended
     unended_whences = Whence.last_unended
@@ -59,7 +61,7 @@ class Whence
   end
 end
 
-DataMapper.auto_migrate!
+#DataMapper.auto_migrate!
 
 Project.create :name => 'Lunch/Break'
 Project.create :name => 'Research'

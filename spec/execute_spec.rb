@@ -31,5 +31,35 @@ module Bnl
         fragment.execute 
       }.should change(Whence, :count).by(1)
     end
+
+    it "creates the correct model defined by the article and noun for ORM Model" do
+      parsed = @parser.parse('Create a project Something on 5/5.')
+      fragment = parsed.fragments.first
+      fragment.article.to_object.should eql(Project)
+      fragment.name.should eql 'Something'
+      lambda {
+        fragment.execute 
+      }.should change(Project, :count).by(1)
+    end
+
+    it "creates the correct model defined by the article and noun for standard lib object" do
+      parsed = @parser.parse('Create a Whence on 5/5.')
+      fragment = parsed.fragments.first
+      fragment.article.to_object.should eql(Object)
+      fragment.name.should eql 'Something'
+      lambda {
+        fragment.execute 
+      }.should change(Project, :count).by(1)
+    end
+
+    it "finds the correct model defined by the article and noun for ORM Model" do
+      parsed = @parser.parse('End Research now.')
+      fragment = parsed.fragments.first
+      fragment.article.to_object.should eql(Object)
+      fragment.name.should eql 'Research'
+      lambda {
+        fragment.execute 
+      }.should_not change(Project.named("Research").whences, :count).by(1)
+    end
   end
 end

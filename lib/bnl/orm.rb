@@ -13,15 +13,52 @@ module Bnl::Dsl
       elements[2]
     end
 
+    def name
+      elements[3].to_s
+    end
+
     def execute
       object = noun.find
-      object.send verb.to_sym, temporal.value
+      method = verb.to_sym
+
+      if [:create].include? method
+        if object.nil?
+          arguments = {
+            :name       => noun,
+            :created_at => temporal.value
+          }
+          object = article.to_object
+          object.send method, arguments
+        else
+          object.send method, temporal.value
+        end
+      else
+        if object.nil?
+        else
+          object.send method, temporal.value
+        end
+      end
     end
   end
 
   module Klass
     def to_s
       text_value.strip
+    end
+
+    def to_object 
+      article, type = to_s.split ' '
+      case article
+      when 'a', 'an'
+        return constantize! type.capitalize
+      when 'the'
+      end
+    end
+
+    def constantize! type
+      found = Object.constants.find {|con| con == type }
+      return Object.const_get(found) unless found.nil?
+      found
     end
   end
 

@@ -56,6 +56,10 @@ module Bnl
         fragments = fragments('Create a project Something on 5/5.')
         fragments.collect(&:to_s).should eql(['Create a project Something on 5/5'])
         fragments.first.article.to_s.should eql('a project')
+
+        fragments = fragments('Create an object SomethingElse on 5/5.')
+        fragments.collect(&:to_s).should eql(['Create an object SomethingElse on 5/5'])
+        fragments.first.article.to_s.should eql('an object')
       end
 
       it ", parses indefinite articles with a 'new' adjective" do
